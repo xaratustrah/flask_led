@@ -4,7 +4,7 @@
 
 This is a simple web application using Flask to turn an LED (or anything else) on and off on a Raspberry PI.
 
-It uses many libraries and technologies namely flask, flask_wtf, flask bootstrap, jinja2, ajax calls and many more. The view has CSRF protection.
+It uses many libraries and technologies namely `flask`, `flask_wtf`, `flask bootstrap`, `jinja2`, ajax calls in javascript and many more. The view has CSRF protection.
 
 #### Hardware connection
 
