@@ -1,0 +1,94 @@
+{% extends "bootstrap/base.html" %}
+
+{% block title %}
+Flask Raspberry PI LED example
+{% endblock %}
+
+{% block metas %}
+<meta charset="utf-8"/>
+{% endblock %}
+
+{% block styles %}
+{{ super() }}
+<link rel="stylesheet" href="http://cdn.pydata.org/bokeh/release/bokeh-0.12.3.min.css" type="text/css"/>
+<link rel="stylesheet" href="{{url_for('.static', filename='basic.css')}}">
+{% endblock %}
+
+{% block scripts %}
+{{ super() }}
+<script type="text/javascript">
+  var $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
+</script>
+
+<script type="text/javascript">
+//React on radio button on change event
+
+ $(document).ready(function() {
+   $('input[name=radio]').change(function(){
+        $('form').submit();
+   });
+  });
+
+</script>
+
+<script type="text/javascript">
+// Send the status of the radio buttons using AJAX
+function radio_changed(){
+  var csrf_token = "{{ csrf_token() }}";
+  console.log("csrf_token: ", csrf_token);
+    $.ajaxSetup({
+        beforeSend: function(xhr, settings) {
+            if (!/^(GET|HEAD|OPTIONS|TRACE)$/i.test(settings.type  && !this.crossDomain)) {
+                xhr.setRequestHeader("X-CSRFToken", csrf_token);
+            }
+        }
+    });
+    var radioValue = $("input[class=radios]:checked").val();
+    console.log("radioValue: ", radioValue);
+    // alert(radioValue);
+     $.ajax({
+                    url: '/_radio_update',
+                    // crossDomain: false,
+                    data: {value:radioValue},
+                    type: 'POST',
+                    success: function(response){
+                            console.log(response);
+                    },
+                    error: function(error){
+                            console.log(error);
+                    }
+            });
+}
+</script>
+
+{% endblock %}
+
+{% block content %}
+<div class="alert alert-success" role="alert">
+    Turn the LED on or off.
+</div>
+
+<p>LED Status:</p>
+<form method=post action="">
+  <!-- CSRF token is needed inside the form -->
+
+  {{ form.csrf_token }}
+
+<!-- This will place them in a <ul> environment -->
+<!-- {{ form.radio }} -->
+<!-- In order to place near each other, you must iterate thru subfields. -->
+{% for subfield in form.radio %}
+<p class='tab'>
+<tr>
+  <!-- This method makes sure names go in without problems even if there are - in between
+  using ad hoc dictionary. -->
+    <td>{{ subfield(**{'class':'radios', 'onchange':'radio_changed()'}) }}</td>
+    <td>{{ subfield.label }}</td>
+</tr>
+{% endfor %}
+</p>
+<br>
+</form>
+<br>
+
+{% endblock %}
