@@ -1,6 +1,6 @@
 # Flask LED
 
-<img src="https://raw.githubusercontent.com/xaratustrah/flask_led/master/screenshot.png" width="128">
+<img src="https://raw.githubusercontent.com/xaratustrah/flask_led/master/screenshot.png">
 
 This is a simple web application using Flask to turn an LED (or anything else) on and off on a Raspberry PI.
 
