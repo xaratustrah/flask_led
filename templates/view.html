@@ -47,7 +47,7 @@ function radio_changed(){
     console.log("radioValue: ", radioValue);
     // alert(radioValue);
      $.ajax({
-                    url: '/_radio_update',
+                    url: $SCRIPT_ROOT + '/_radio_update',
                     // crossDomain: false,
                     data: {value:radioValue},
                     type: 'POST',

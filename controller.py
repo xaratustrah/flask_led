@@ -30,7 +30,7 @@ Bootstrap(app)
 
 @app.route('/_radio_update', methods=['GET', 'POST'])
 def _radio_update(ledstatus):
-    print(ledstatus)
+    print('hello world', ledstatus)
 
 
 @app.route('/', methods=['GET', 'POST'])
